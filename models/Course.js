@@ -32,6 +32,11 @@ const CourseSchema = new mongoose.Schema({
     default: Date.now,
   },
   bootcamp: { type: mongoose.Schema.ObjectId, ref: "Bootcamp", required: true },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 // Static method to get averagee course tuitions
@@ -60,8 +65,8 @@ CourseSchema.statics.getAverageCost = async function (bootcampId) {
 CourseSchema.post("save", function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
-// Call getAverageCost after before remove
-CourseSchema.pre("remove", function () {
+// Call getAverageCost after remove
+CourseSchema.post("remove", function () {
   this.constructor.getAverageCost(this.bootcamp);
 });
 
