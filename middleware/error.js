@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
 
   // Mongoose bad ObjectID
   if (err.name === "CastError") {
-    const message = `Bootcamps not found with id of ${error.value}`;
+    const message = `Resource not found with id of ${error.value}`;
     error = new ErrorResponse(message, 404);
   }
 
